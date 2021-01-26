@@ -46,7 +46,6 @@ public class JobData {
 
         // Bonus mission: sort the results
         Collections.sort(values);
-//        not working :( whyyyy lol
 
         return values;
     }
