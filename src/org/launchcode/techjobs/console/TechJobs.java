@@ -1,17 +1,19 @@
 package org.launchcode.techjobs.console;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-/**
+/*
  * Created by LaunchCode
  */
 public class TechJobs {
 
     private static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -31,7 +33,7 @@ public class TechJobs {
         // Allow the user to search until they manually quit
         while (true) {
 
-            String actionChoice = getUserSelection("View jobs by:", actionChoices);
+            String actionChoice = getUserSelection("View jobs by:", actionChoices).toLowerCase();
 
             if (actionChoice.equals("list")) {
 
@@ -61,7 +63,9 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+//                    Task 3 Call findByvalue
+                    printJobs(JobData.findByValue(searchTerm));
+//                    System.out.println("Search all fields not yet implemented.");
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -103,14 +107,24 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
 
-    // Print a list of jobs
+    // Task 1 Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
-
-        System.out.println("printJobs is not implemented yet");
+        if (someJobs.isEmpty()) {
+            System.out.println("No results found.");
+        } else {
+            for (HashMap<String, String> row : someJobs) {
+                System.out.println("*****");
+                    for (String key : row.keySet()) {
+                        System.out.println(key + ": " + row.get(key));
+                    }
+                    System.out.println("*****" + "\n");
+                }
+            }
+//            System.out.println("printJobs is not implemented yet");
+        }
     }
-}

@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Collections;
 
 /**
  * Created by LaunchCode
@@ -43,6 +44,10 @@ public class JobData {
             }
         }
 
+        // Bonus mission: sort the results
+        Collections.sort(values);
+//        not working :( whyyyy lol
+
         return values;
     }
 
@@ -72,9 +77,11 @@ public class JobData {
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
 
-        for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
+
+        for (HashMap<String, String> row : allJobs) {
+            // Task 3 Make Search Methods Case-Insensitive
+            String aValue = row.get(column).toLowerCase();
 
             if (aValue.contains(value)) {
                 jobs.add(row);
@@ -83,6 +90,32 @@ public class JobData {
 
         return jobs;
     }
+
+        // Task 2 create  method that will search for a string within each of the columns.
+        public static ArrayList<HashMap<String, String>> findByValue(String value) {
+
+            //load data, if not already loaded
+            loadData();
+
+            ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+            // Task 3 Make Search Methods Case-Insensitive
+            String lowerValue = value.toLowerCase();
+
+            for (HashMap<String, String> row : allJobs) {
+                boolean added = false;
+                for (String key : row.keySet()) {
+                    if (!added) {
+                        String aValue = row.get(key).toLowerCase();
+                        if (aValue.contains(lowerValue)) {
+                            jobs.add(row);
+                            added = true;
+                        }
+                    }
+                }
+            }
+
+            return jobs;
+        }
 
     /**
      * Read in data from a CSV file and store it in a list
